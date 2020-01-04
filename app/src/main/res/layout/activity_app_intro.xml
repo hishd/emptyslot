@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_two"
+    tools:context=".activity_app_intro">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerIntro"
+        android:layout_marginBottom="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linearBottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+    </LinearLayout>
+
+</RelativeLayout>
