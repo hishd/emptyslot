@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Empty SLOT</string>
     <string name="start_caption">A Project by Team Dominators, NIBM</string>
+    <string name="welcome_login">Welcome to</string>
+    <string name="login_caption">Login | Register</string>
+    <string name="login_caption_2">Register ot Login to your Account</string>
 </resources>

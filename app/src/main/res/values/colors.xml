@@ -5,4 +5,7 @@
     <color name="colorAccent">#a29bfe</color>
     <color name="statusBarColor">#636e72</color>
 
+    <color name="dotColor">#FFFFFF</color>
+    <color name="dotColorLarge">#A6F1A6</color>
+
 </resources>
