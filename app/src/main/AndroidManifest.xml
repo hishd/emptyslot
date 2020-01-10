@@ -13,15 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_login">
+        <activity android:name=".activity_reset_password"></activity>
+        <activity android:name=".activity_login"></activity>
+        <activity android:name=".activity_app_intro" />
+        <activity android:name=".activity_launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity_app_intro"></activity>
-        <activity android:name=".activity_launch">
         </activity>
     </application>
 

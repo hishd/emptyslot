@@ -7,19 +7,26 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import spencerstudios.com.bungeelib.Bungee;
+
 public class activity_app_intro extends AppCompatActivity {
 
     ViewPager viewPagerIntro;
     LinearLayout linearDots;
+    Animation shrinkEnter;
+    Animation animateCaption;
 
     IntroSliderAdapter sliderAdapter;
 
@@ -41,9 +48,16 @@ public class activity_app_intro extends AppCompatActivity {
         btnPrev.setVisibility(View.INVISIBLE);
         btnNextFinish = findViewById(R.id.btnNextFinish);
 
+        shrinkEnter = AnimationUtils.loadAnimation(this,R.anim.shrink_enter);
+        animateCaption = AnimationUtils.loadAnimation(this,R.anim.zoom_enter);
+
+        btnNextFinish.startAnimation(shrinkEnter);
+
         sliderAdapter = new IntroSliderAdapter(this);
 
         viewPagerIntro.setAdapter(sliderAdapter);
+
+        viewPagerIntro.startAnimation(animateCaption);
 
         addDotIndicators(0);
 
@@ -83,6 +97,7 @@ public class activity_app_intro extends AppCompatActivity {
             }
         }else{
             Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            startNext();
         }
     }
 
@@ -94,6 +109,7 @@ public class activity_app_intro extends AppCompatActivity {
                     if (ContextCompat.checkSelfPermission(activity_app_intro.this,
                             Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                        startNext();
                     }
                 }else{
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
@@ -121,6 +137,13 @@ public class activity_app_intro extends AppCompatActivity {
             mDots[position].setTextSize(50);
             mDots[position].setTextColor(getResources().getColor(R.color.dotColorLarge));
         }
+    }
+
+    void startNext(){
+        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(activity_app_intro.this,activity_login.class));
+        Bungee.zoom(this);
+        finish();
     }
 
     ViewPager.OnPageChangeListener viewListner = new ViewPager.OnPageChangeListener() {

@@ -17,6 +17,7 @@ public class IntroSliderAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
 
+
     final String[] lottieAnimations = {"intro_nearby_spots.json","intro_book_slots.json","intro_add_parking_spaces.json","intro_contribute.json","intro_location.json"};
 
     final String[] captions = {"Find Parking Spots","Book Parking Spots","Add your Parking Spaces","Contribute to Public","Provide Location Access"};
