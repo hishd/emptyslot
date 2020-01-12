@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Empty SLOT</string>
+    <string name="version_no">1.0.0. beta</string>
     <string name="start_caption">A Project by Team Dominators, NIBM</string>
     <string name="welcome_login">Welcome to</string>
     <string name="login_caption">Sign in | Register</string>
@@ -32,5 +33,19 @@
     <string name="title_activity_main_map_view">Map</string>
 
     <string name="account_settings">Account Settings</string>
+    <string name="account_settings_app_name">Empty SLOT</string>
+    <string name="account_settings_app_caption">Pushing Beyond Limits</string>
+    <string name="account_settings_account">Account</string>
+    <string name="account_settings_change">Change</string>
+    <string name="account_settings_change_name">Change Name</string>
+    <string name="account_settings_change_email">Change Email</string>
+    <string name="account_settings_change_password">Change Password</string>
+    <string name="account_settings_general">General</string>
+    <string name="account_settings_help_support">Help and Support</string>
+    <string name="account_settings_provide_feedback">Provide Feedback</string>
+    <string name="account_settings_terms_and_conditions">Terms and Conditions</string>
+    <string name="account_settings_privacy_policy">Privacy Policy</string>
+    <string name="account_settings_app_version">App Version</string>
+    <string name="account_settings_logout">Logout</string>
 
 </resources>

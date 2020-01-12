@@ -12,6 +12,6 @@
     <color name="sign_up_edit_texts_tint_text_headings">#FFFFFF</color>
     
     <color name="accout_settings">#494FB0</color>
-
+    <color name="accout_settings_buttons">#121DCD</color>
 
 </resources>

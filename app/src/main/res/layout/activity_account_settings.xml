@@ -7,17 +7,364 @@
     tools:context=".activity_account_settings">
 
     <RelativeLayout
+        android:id="@+id/layout_top"
+        android:paddingBottom="20dp"
         android:background="@color/accout_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
             android:layout_centerHorizontal="true"
             android:text="@string/account_settings"
             android:textColor="@color/sign_up_edit_texts_tint_text_headings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/img_bottom"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="18dp"
+            android:layout_alignStart="@+id/img_back"
+            android:layout_below="@+id/img_back"
+            android:src="@drawable/logo_round"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_alignTop="@+id/img_bottom"
+            android:id="@+id/txt_top"
+            android:textSize="20dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:layout_toEndOf="@+id/img_bottom"
+            android:text="@string/account_settings_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textSize="12dp"
+            android:layout_below="@+id/txt_top"
+            android:layout_toEndOf="@+id/img_bottom"
+            android:layout_alignStart="@+id/txt_top"
+            android:text="@string/account_settings_app_caption"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/rtl_layout_top"
+                android:paddingStart="20dp"
+                android:paddingEnd="40dp"
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="16sp"
+                    android:id="@+id/txt1"
+                    android:text="@string/account_settings_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:id="@+id/layout1"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/txt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtName"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_change_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtChangeName"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/accout_settings_buttons"
+                        android:text="@string/account_settings_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtChangeName"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout2"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtEmail"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_change_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtChangeEmail"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/accout_settings_buttons"
+                        android:text="@string/account_settings_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtChangeEmail"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout3"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtPassword"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_change_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtChangePassword"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/accout_settings_buttons"
+                        android:text="@string/account_settings_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtChangePassword"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rth_layout_bottom"
+                android:paddingStart="20dp"
+                android:paddingEnd="40dp"
+                android:paddingTop="20dp"
+                android:layout_below="@+id/rtl_layout_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="16sp"
+                    android:id="@+id/txt1_1"
+                    android:text="@string/account_settings_general"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:id="@+id/layout2_1"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/txt1_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtHelpAndSupport"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_help_support"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtHelpAndSupport"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout2_2"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/layout2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtGiveUsFeedBack"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_provide_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtGiveUsFeedBack"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout2_3"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/layout2_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtTermsAndConditions"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_terms_and_conditions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtTermsAndConditions"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout2_4"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/layout2_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtPrivacyPolicy"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_privacy_policy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtPrivacyPolicy"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout2_5"
+                    android:paddingStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/layout2_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtAppVersion"
+                        android:layout_alignParentStart="true"
+                        android:textColor="@android:color/black"
+                        android:text="@string/account_settings_change_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:id="@+id/txtAppVersionNo"
+                        android:layout_alignParentEnd="true"
+                        android:textColor="@color/accout_settings_buttons"
+                        android:text="@string/version_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <View
+                        android:alpha="0.3"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/txtAppVersionNo"
+                        style="@style/Divider"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                android:text="@string/account_settings_logout"
+                android:background="@color/colorAccent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/rth_layout_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
 
 </RelativeLayout>
