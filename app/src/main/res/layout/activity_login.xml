@@ -90,6 +90,9 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:backgroundTint="@color/sign_up_edit_texts_tint_text_headings"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textColorHint="@color/sign_up_edit_texts_hint"
             android:layout_marginTop="20dp"
             android:id="@+id/txtPhoneNo"
             android:inputType="phone"
@@ -98,6 +101,9 @@
             android:hint="@string/login_phone_no"/>
 
         <EditText
+            android:backgroundTint="@color/sign_up_edit_texts_tint_text_headings"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textColorHint="@color/sign_up_edit_texts_hint"
             android:layout_marginTop="20dp"
             android:layout_below="@id/txtPhoneNo"
             android:id="@+id/txtPassword"
@@ -107,7 +113,8 @@
             android:hint="@string/login_password"/>
 
         <TextView
-            android:textColor="#34495e"
+            android:backgroundTint="@color/sign_up_edit_texts_tint_text_headings"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
             android:textSize="16sp"
             android:id="@+id/txtForgotPassword"
             android:layout_marginTop="25dp"
@@ -135,7 +142,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/login_button_round"
+            android:background="@drawable/sign_up_button_round"
             android:text="@string/login_login"
             android:textColor="@android:color/white"/>
 
@@ -148,6 +155,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                 android:id="@+id/txt1"
                 android:text="@string/login_new_user"
                 android:layout_width="wrap_content"
@@ -155,7 +163,7 @@
 
             <TextView
                 android:id="@+id/txtSignUp"
-                android:textColor="#2c3e50"
+                android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:text="@string/login_register_here"

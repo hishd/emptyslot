@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import spencerstudios.com.bungeelib.Bungee;
+
 public class activity_login extends AppCompatActivity {
 
     ImageView imgViewBgLogin;
@@ -80,6 +82,22 @@ public class activity_login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(activity_login.this,activity_reset_password.class));
+                Bungee.zoom(activity_login.this);
+            }
+        });
+
+        txtSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_login.this,activity_signup.class));
+                Bungee.zoom(activity_login.this);
+            }
+        });
+
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_login.this,activity_main_map_view.class));
             }
         });
 

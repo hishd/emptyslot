@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_own_parkings"
+        android:icon="@drawable/ic_own_parking"
+        android:title="Own Parkings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_add_parkings"
+        android:icon="@drawable/ic_add_parkings"
+        android:title="Add Parkings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_my_bookings"
+        android:icon="@drawable/ic_bookings"
+        android:title="My Bookings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_my_account"
+        android:icon="@drawable/ic_account"
+        android:title="My Account"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_close"
+        android:icon="@drawable/ic_close"
+        android:title="Close Menu"
+        app:showAsAction="ifRoom" />
+
+</menu>

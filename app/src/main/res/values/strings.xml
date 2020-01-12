@@ -18,4 +18,17 @@
     <string name="reset_password_email">Email Address</string>
     <string name="reset_password_submit">Submit</string>
 
+    <string name="sign_up_caption_head">Join Empty SLOT</string>
+    <string name="sign_up_caption_2">Get on Board</string>
+    <string name="sign_up_sign_up">Sign Up</string>
+    <string name="sign_up_name">Name</string>
+    <string name="sign_up_email">Email Address</string>
+    <string name="sign_up_password">Password</string>
+    <string name="sign_up_confirm_password">Confirm Password</string>
+    <string name="sign_up_policy_caption1">By creating an account, you agreed to the,</string>
+    <string name="sign_up_policy_caption2"> <u>Terms of use and Privacy Policy</u> </string>
+    <string name="sign_up_already_member">I\'m already a member</string>
+    <string name="sign_up_vehicle_types">Select Vehicle types you usually drive</string>
+    <string name="title_activity_main_map_view">Map</string>
+
 </resources>

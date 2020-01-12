@@ -8,4 +8,8 @@
     <color name="dotColor">#FFFFFF</color>
     <color name="dotColorLarge">#A6F1A6</color>
 
+    <color name="sign_up_edit_texts_hint">#CFCFCF</color>
+    <color name="sign_up_edit_texts_tint_text_headings">#FFFFFF</color>
+
+
 </resources>
