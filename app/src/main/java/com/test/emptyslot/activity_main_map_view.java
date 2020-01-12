@@ -98,7 +98,7 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         floatingToolbar.attachFab(fab);
 
 
-        Places.initialize(getApplicationContext(),"AIzaSyDYGbLz0v0yFEOhio4dFZmt8G1q4frJ2d8");
+        Places.initialize(getApplicationContext(),getResources().getString(R.string.maps_api_key));
         placesClient = Places.createClient(this);
 
 

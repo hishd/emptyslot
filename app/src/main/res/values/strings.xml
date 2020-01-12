@@ -31,4 +31,6 @@
     <string name="sign_up_vehicle_types">Select Vehicle types you usually drive</string>
     <string name="title_activity_main_map_view">Map</string>
 
+    <string name="account_settings">Account Settings</string>
+
 </resources>
