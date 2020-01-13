@@ -1,4 +1,4 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -9,7 +9,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,7 +21,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.rubensousa.floatingtoolbar.FloatingToolbar;
-import com.github.rubensousa.floatingtoolbar.FloatingToolbarMenuBuilder;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,6 +39,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
+import com.hishd.emptyslot.Util.AppConfig;
 
 import java.util.Arrays;
 
@@ -70,6 +69,8 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     MarkerOptions myLocationMarker;
     Marker marker;
 
+    AppConfig appConfig;
+
     void setUpCluster() {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(unityPlaza, 17.5f));
 
@@ -97,6 +98,8 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_map_view);
+
+        appConfig = new AppConfig(this);
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -329,4 +332,27 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(!appConfig.isUserLoggedIn()){
+            startActivity(new Intent(activity_main_map_view.this,activity_login.class));
+            Bungee.zoom(activity_main_map_view.this);
+            finish();
+            return;
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        if(!appConfig.isUserLoggedIn()){
+            startActivity(new Intent(activity_main_map_view.this,activity_login.class));
+            Bungee.zoom(activity_main_map_view.this);
+            finish();
+            return;
+        }
+    }
 }

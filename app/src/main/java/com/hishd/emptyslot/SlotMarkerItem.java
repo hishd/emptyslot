@@ -1,4 +1,4 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;

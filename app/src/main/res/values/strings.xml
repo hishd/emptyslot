@@ -24,6 +24,7 @@
     <string name="sign_up_sign_up">Sign Up</string>
     <string name="sign_up_name">Name</string>
     <string name="sign_up_email">Email Address</string>
+    <string name="sign_up_phone">Mobile No</string>
     <string name="sign_up_password">Password</string>
     <string name="sign_up_confirm_password">Confirm Password</string>
     <string name="sign_up_policy_caption1">By creating an account, you agreed to the,</string>
@@ -47,5 +48,7 @@
     <string name="account_settings_privacy_policy">Privacy Policy</string>
     <string name="account_settings_app_version">App Version</string>
     <string name="account_settings_logout">Logout</string>
+
+    <string name="loading">Loading..</string>
 
 </resources>

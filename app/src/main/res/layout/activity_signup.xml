@@ -85,6 +85,18 @@
                     android:backgroundTint="@color/sign_up_edit_texts_hint"
                     android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
                     android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:id="@+id/txtPhoneNo"
+                    android:inputType="phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_up_phone"/>
+
+                <EditText
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@id/txtPhoneNo"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:id="@+id/txtPassword"
                     android:inputType="textPassword"
                     android:layout_width="match_parent"

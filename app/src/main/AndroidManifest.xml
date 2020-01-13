@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.test.emptyslot">
+    package="com.hishd.emptyslot">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_account_settings"></activity>
+        <activity android:name="com.hishd.emptyslot.activity_account_settings"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -31,18 +33,18 @@
             android:value="@string/maps_api_key" />
 
         <activity
-            android:name=".activity_main_map_view"
+            android:name="com.hishd.emptyslot.activity_main_map_view"
             android:label="@string/title_activity_main_map_view" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity_signup" />
-        <activity android:name=".activity_reset_password" />
-        <activity android:name=".activity_login" />
-        <activity android:name=".activity_app_intro" />
-        <activity android:name=".activity_launch">
+        <activity android:name="com.hishd.emptyslot.activity_signup" />
+        <activity android:name="com.hishd.emptyslot.activity_reset_password" />
+        <activity android:name="com.hishd.emptyslot.activity_login" />
+        <activity android:name="com.hishd.emptyslot.activity_app_intro" />
+        <activity android:name="com.hishd.emptyslot.activity_launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

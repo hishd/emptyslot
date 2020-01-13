@@ -1,10 +1,14 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.view.Display;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,6 +19,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.andrognito.flashbar.Flashbar;
+import com.andrognito.flashbar.anim.FlashAnim;
+import com.hishd.emptyslot.Util.FirebaseES;
+import com.hishd.emptyslot.Util.Validator;
 
 import spencerstudios.com.bungeelib.Bungee;
 
@@ -35,6 +44,9 @@ public class activity_login extends AppCompatActivity {
     TextView txtForgotPassword;
     Button btnSignIn;
     TextView txtSignUp;
+
+    Vibrator vibrate;
+    Animation shakeEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +79,10 @@ public class activity_login extends AppCompatActivity {
         layoutMiddle.animate().translationY(140).alpha(0).setDuration(800).setStartDelay(1600);
         layoutTop.startAnimation(bgAnim);
 
+        vibrate = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        shakeEditText = AnimationUtils.loadAnimation(this,R.anim.anim_shake_edit_text);
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -97,9 +113,51 @@ public class activity_login extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(activity_login.this,activity_main_map_view.class));
+//                startActivity(new Intent(activity_login.this,activity_main_map_view.class));
+                if(!Validator.validatePhone(txtPhoneNo.getText().toString())){
+                    showAlertDialog("Please enter a valid Mobile No").show();
+                    initEditTextErrorAnimation(txtPhoneNo);
+                    return;
+                }
+                if(txtPassword.getText().toString().length()<6){
+                    showAlertDialog("Please enter a valid Password").show();
+                    initEditTextErrorAnimation(txtPassword);
+                    return;
+                }
+
+                FirebaseES firebaseES = new FirebaseES(activity_login.this);
+                firebaseES.userLogin(activity_login.this,txtPhoneNo.getText().toString(),txtPassword.getText().toString());
+
             }
         });
 
+    }
+
+    private void initEditTextErrorAnimation(EditText editText){
+        vibrate.vibrate(20);
+        editText.startAnimation(shakeEditText);
+    }
+
+    private Flashbar showAlertDialog(String message){
+        return new Flashbar.Builder(this)
+                .gravity(Flashbar.Gravity.BOTTOM)
+                .duration(1000)
+                .message(message)
+                .messageColor(ContextCompat.getColor(this, R.color.white))
+                .backgroundColor(ContextCompat.getColor(this, R.color.errorMessageBackgroundColor))
+                .showIcon()
+                .iconColorFilterRes(R.color.errorMessageIconColor)
+                .icon(R.drawable.ic_cross)
+                .enterAnimation(FlashAnim.with(this)
+                        .animateBar()
+                        .duration(200)
+                        .slideFromLeft()
+                        .overshoot())
+                .exitAnimation(FlashAnim.with(this)
+                        .animateBar()
+                        .duration(600)
+                        .slideFromLeft()
+                        .accelerate())
+                .build();
     }
 }

@@ -14,4 +14,8 @@
     <color name="accout_settings">#494FB0</color>
     <color name="accout_settings_buttons">#121DCD</color>
 
+    <color name="errorMessageIconColor">#A30101</color>
+    <color name="errorMessageTextColor">#FFFFFF</color>
+    <color name="errorMessageBackgroundColor">#222121</color>
+
 </resources>

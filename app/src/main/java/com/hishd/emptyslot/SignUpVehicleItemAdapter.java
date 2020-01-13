@@ -1,4 +1,4 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -70,15 +70,15 @@ public class SignUpVehicleItemAdapter extends RecyclerView.Adapter<SignUpVehicle
             });
 
         }
+    }
 
-        public ArrayList<Vehicle> getSelected(){
-            ArrayList<Vehicle> selectedVehicles = new ArrayList<>();
-            for (int i = 0; i < vehicles.size(); i++) {
-                if (vehicles.get(i).isChecked()) {
-                    selectedVehicles.add(vehicles.get(i));
-                }
+    public ArrayList<Vehicle> getSelected(){
+        ArrayList<Vehicle> selectedVehicles = new ArrayList<>();
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (vehicles.get(i).isChecked()) {
+                selectedVehicles.add(vehicles.get(i));
             }
-            return selectedVehicles;
         }
+        return selectedVehicles;
     }
 }

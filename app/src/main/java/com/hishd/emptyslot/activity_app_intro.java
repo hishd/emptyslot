@@ -1,4 +1,4 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hishd.emptyslot.Util.AppConfig;
+
 import spencerstudios.com.bungeelib.Bungee;
 
 public class activity_app_intro extends AppCompatActivity {
@@ -36,11 +38,14 @@ public class activity_app_intro extends AppCompatActivity {
     Button btnNextFinish;
 
     private int mCurrentPage;
+    AppConfig appConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_intro);
+
+        appConfig = new AppConfig(this);
 
         viewPagerIntro = findViewById(R.id.viewPagerIntro);
         linearDots = findViewById(R.id.linearDots);
@@ -96,6 +101,7 @@ public class activity_app_intro extends AppCompatActivity {
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }else{
+            appConfig.setAppIntroFinished();
             Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
             startNext();
         }
@@ -108,6 +114,7 @@ public class activity_app_intro extends AppCompatActivity {
                 if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if (ContextCompat.checkSelfPermission(activity_app_intro.this,
                             Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                        appConfig.setAppIntroFinished();
                         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
                         startNext();
                     }
@@ -140,7 +147,6 @@ public class activity_app_intro extends AppCompatActivity {
     }
 
     void startNext(){
-        Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(activity_app_intro.this,activity_login.class));
         Bungee.zoom(this);
         finish();

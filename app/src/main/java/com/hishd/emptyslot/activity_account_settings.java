@@ -1,4 +1,4 @@
-package com.test.emptyslot;
+package com.hishd.emptyslot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.hishd.emptyslot.Util.AppConfig;
 
 import spencerstudios.com.bungeelib.Bungee;
 
@@ -20,6 +22,7 @@ public class activity_account_settings extends AppCompatActivity {
     TextView txtChangeEmail;
     TextView txtChangePassword;
     Button btnLogout;
+    AppConfig appConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +38,22 @@ public class activity_account_settings extends AppCompatActivity {
         txtChangePassword = findViewById(R.id.txtChangePassword);
         btnLogout = findViewById(R.id.btnLogout);
 
+        appConfig = new AppConfig(this);
+
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
                 Bungee.fade(activity_account_settings.this);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appConfig.setUserLoggedOut();
+                finish();
             }
         });
     }
