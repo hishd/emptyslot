@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4248A1"
+    tools:context=".activity_add_public_parkings">
+
+    <ImageView
+        android:id="@+id/view_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/header_gradient_wave_center" />
+
+    <RelativeLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/view_top"
+        android:layout_alignBottom="@id/view_top"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/view_caption_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/add_public_parking_title_1"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/view_caption_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_caption_head"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/add_public_parking_title_2"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="28sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layoutMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_top"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp">
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/txtParkingName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/add_public_parking_parking_name"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
+
+                <EditText
+                    android:id="@+id/txtLandmarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtParkingName"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/add_public_parking_landmarks"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
+
+                <EditText
+                    android:id="@+id/txtNoOfSlots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtLandmarks"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/add_public_parking_estimated_spaces"
+                    android:inputType="numberSigned"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
+
+                <EditText
+                    android:id="@+id/txtSpecialNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNoOfSlots"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/add_public_parking_special_notes"
+                    android:inputType="text"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
+
+                <EditText
+                    android:id="@+id/txtSelectLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtSpecialNotes"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:focusable="false"
+                    android:hint="@string/add_public_parking_select_location"
+                    android:inputType="none"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
+
+                <TextView
+                    android:id="@+id/select_images"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtSelectLocation"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/add_public_parking_image"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/layout_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/select_images"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgParking"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/add_image" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_temp_space"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_images"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="30dp"
+                    android:autoLink="all"
+                    android:linksClickable="false"
+                    android:paddingStart="5dp"
+                    android:selectAllOnFocus="false"
+                    android:text="@string/add_public_parking_temporary_parking"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/switchTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_images"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="30dp" />
+
+
+                <TextView
+                    android:id="@+id/view_what_is_temp_parking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/switchTemp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:autoLink="all"
+                    android:linksClickable="false"
+                    android:selectAllOnFocus="false"
+                    android:text="@string/add_public_parking_what_is_temporary_parking"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnAddParking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progressImgUpload"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/sign_up_button_round"
+                    android:text="@string/add_public_parking_add_parking"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textSize="18sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressImgUpload"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_what_is_temp_parking"
+                    android:layout_marginTop="20dp" />
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -49,6 +49,54 @@
     <string name="account_settings_app_version">App Version</string>
     <string name="account_settings_logout">Logout</string>
 
+    <string name="change_info_confirm">Confirm</string>
+    <string name="change_name_title">Change Username</string>
+    <string name="change_name">Enter Name</string>
+    <string name="change_email_title">Change E-mail Address</string>
+    <string name="change_email">Enter Email Address</string>
+    <string name="change_password_title">Change Password</string>
+    <string name="change_password">Enter new Password</string>
+    <string name="change_confirm_password">Confirm Password</string>
+
+    <string name="intro_own_parking_heading">Own Parking Spaces</string>
+    <string name="intro_own_parking_caption_1">Add your parking to Empty SLOT</string>
+    <string name="intro_own_parking_sub_caption_1">Register with Empty SLOT and provide us the information that, where your parking lot is located</string>
+    <string name="intro_own_parking_sub_caption_2">Earn money while notifying Empty SLOT users, about your parking lot.</string>
+    <string name="intro_own_parking_caption_2">Earn more money.</string>
+    <string name="intro_own_parking_got_it">Got it</string>
+
+    <string name="own_parkings_title_1">Own Parking Spaces</string>
+    <string name="own_parkings_title_2">Add Parking</string>
+    <string name="own_parkings_your_name">Your Name</string>
+    <string name="own_parkings_your_contact_no">Your Contact No</string>
+    <string name="own_parkings_your_location">Your Address / Landmarks</string>
+    <string name="own_parkings_no_of_spaces">Number of Parking Spaces</string>
+    <string name="own_parkings_rates">Enter Rates per Hour</string>
+    <string name="own_parkings_select_location">Select Location of Parking Space</string>
+    <string name="own_parkings_request_hw_sensors">Required H/W Sensors</string>
+    <string name="own_parkings_what_is_hw"> <u>What are Hardware Sensors</u> </string>
+    <string name="own_parkings_select_images"> Select Images of the Parking Space </string>
+    <string name="own_parkings_place_request">Place Request</string>
+
+    <string name="add_public_parking_title_1">Contribute to Public</string>
+    <string name="add_public_parking_title_2">Add Public Parking</string>
+    <string name="add_public_parking_parking_name">Name of the Parking</string>
+    <string name="add_public_parking_landmarks">Landmarks of the Parking</string>
+    <string name="add_public_parking_estimated_spaces">No of available spaces</string>
+    <string name="add_public_parking_special_notes">Special notes</string>
+    <string name="add_public_parking_select_location">Select location of the parking</string>
+    <string name="add_public_parking_temporary_parking">Temporary Parking Space</string>
+    <string name="add_public_parking_what_is_temporary_parking"><u>Temporary parking spaces?</u></string>
+    <string name="add_public_parking_image">Select Images of the Parking Space</string>
+    <string name="add_public_parking_add_parking">Add Parking</string>
+
+
     <string name="loading">Loading..</string>
+    <string name="title_activity_my_bookings">activity_my_bookings</string>
+
+    <string name="title_active_bookings">Active Bookings</string>
+    <string name="title_inactive_bookings">Inactive Bookings</string>
+
+    <string name="title_activity_location_picker">Location Picker</string>
 
 </resources>

@@ -1,11 +1,5 @@
 package com.hishd.emptyslot;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +12,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.hishd.emptyslot.Util.AppConfig;
 
@@ -40,6 +40,47 @@ public class activity_app_intro extends AppCompatActivity {
     private int mCurrentPage;
     AppConfig appConfig;
 
+    ViewPager.OnPageChangeListener viewListner = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            addDotIndicators(position);
+            mCurrentPage = position;
+
+            if (position == 0) {
+                btnNextFinish.setEnabled(true);
+                btnPrev.setEnabled(false);
+                btnPrev.setVisibility(View.INVISIBLE);
+
+                btnNextFinish.setText("Next");
+                btnPrev.setText("");
+            } else if (position == mDots.length - 1) {
+                btnNextFinish.setEnabled(true);
+                btnPrev.setEnabled(true);
+                btnPrev.setVisibility(View.VISIBLE);
+
+                btnNextFinish.setText("Finish");
+                btnPrev.setText("Previous");
+            } else {
+                btnNextFinish.setEnabled(true);
+                btnPrev.setEnabled(true);
+                btnPrev.setVisibility(View.VISIBLE);
+
+                btnNextFinish.setText("Next");
+                btnPrev.setText("Previous");
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +94,8 @@ public class activity_app_intro extends AppCompatActivity {
         btnPrev.setVisibility(View.INVISIBLE);
         btnNextFinish = findViewById(R.id.btnNextFinish);
 
-        shrinkEnter = AnimationUtils.loadAnimation(this,R.anim.shrink_enter);
-        animateCaption = AnimationUtils.loadAnimation(this,R.anim.zoom_enter);
+        shrinkEnter = AnimationUtils.loadAnimation(this, R.anim.shrink_enter);
+        animateCaption = AnimationUtils.loadAnimation(this, R.anim.zoom_enter);
 
         btnNextFinish.startAnimation(shrinkEnter);
 
@@ -72,35 +113,35 @@ public class activity_app_intro extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(btnNextFinish.getText().equals("Finish")){
+                if (btnNextFinish.getText().equals("Finish")) {
                     checkAndRequestPermissions();
                     return;
                 }
 
-                viewPagerIntro.setCurrentItem(mCurrentPage+1);
+                viewPagerIntro.setCurrentItem(mCurrentPage + 1);
             }
         });
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPagerIntro.setCurrentItem(mCurrentPage-1);
+                viewPagerIntro.setCurrentItem(mCurrentPage - 1);
             }
         });
     }
 
     private void checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(activity_app_intro.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity_app_intro.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)){
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(activity_app_intro.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(activity_app_intro.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
-        }else{
+        } else {
             appConfig.setAppIntroFinished();
             Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
             startNext();
@@ -109,16 +150,16 @@ public class activity_app_intro extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1: {
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(activity_app_intro.this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         appConfig.setAppIntroFinished();
                         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
                         startNext();
                     }
-                }else{
+                } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -126,12 +167,11 @@ public class activity_app_intro extends AppCompatActivity {
         }
     }
 
-
-    void addDotIndicators(int position){
+    void addDotIndicators(int position) {
         mDots = new TextView[5];
         linearDots.removeAllViews();
 
-        for(int i=0; i<mDots.length; i++){
+        for (int i = 0; i < mDots.length; i++) {
             mDots[i] = new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226;"));
             mDots[i].setTextSize(35);
@@ -140,56 +180,15 @@ public class activity_app_intro extends AppCompatActivity {
             linearDots.addView(mDots[i]);
         }
 
-        if(mDots.length>0){
+        if (mDots.length > 0) {
             mDots[position].setTextSize(50);
             mDots[position].setTextColor(getResources().getColor(R.color.dotColorLarge));
         }
     }
 
-    void startNext(){
-        startActivity(new Intent(activity_app_intro.this,activity_login.class));
+    void startNext() {
+        startActivity(new Intent(activity_app_intro.this, activity_login.class));
         Bungee.zoom(this);
         finish();
     }
-
-    ViewPager.OnPageChangeListener viewListner = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            addDotIndicators(position);
-            mCurrentPage = position;
-
-            if(position==0){
-                btnNextFinish.setEnabled(true);
-                btnPrev.setEnabled(false);
-                btnPrev.setVisibility(View.INVISIBLE);
-
-                btnNextFinish.setText("Next");
-                btnPrev.setText("");
-            } else if(position==mDots.length-1){
-                btnNextFinish.setEnabled(true);
-                btnPrev.setEnabled(true);
-                btnPrev.setVisibility(View.VISIBLE);
-
-                btnNextFinish.setText("Finish");
-                btnPrev.setText("Previous");
-            } else{
-                btnNextFinish.setEnabled(true);
-                btnPrev.setEnabled(true);
-                btnPrev.setVisibility(View.VISIBLE);
-
-                btnNextFinish.setText("Next");
-                btnPrev.setText("Previous");
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
 }

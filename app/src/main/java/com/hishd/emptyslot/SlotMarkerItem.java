@@ -9,8 +9,8 @@ public class SlotMarkerItem implements ClusterItem {
     private String mTitle;
     private String mSnippet;
 
-    public SlotMarkerItem(double lat, double lng){
-        mPosition = new LatLng(lat,lng);
+    public SlotMarkerItem(double lat, double lng) {
+        mPosition = new LatLng(lat, lng);
     }
 
     public SlotMarkerItem(LatLng mPosition, String mTitle, String mSnippet) {

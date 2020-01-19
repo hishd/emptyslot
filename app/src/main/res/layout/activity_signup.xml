@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_signup"
-    android:background="#21254A">
+    android:background="#21254A"
+    tools:context=".activity_signup">
 
     <ImageView
         android:id="@+id/view_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="-25dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_blue_violet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:src="@drawable/bg_blue_violet" />
 
     <TextView
         android:id="@+id/view_caption_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
         android:layout_marginTop="100dp"
         android:text="@string/sign_up_caption_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/view_caption_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/view_caption_head"
         android:layout_marginStart="20dp"
-        android:textSize="35sp"
-        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
         android:layout_marginTop="5dp"
         android:text="@string/sign_up_caption_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="35sp" />
 
     <RelativeLayout
-        android:layout_below="@id/view_caption_1"
         android:id="@+id/layoutMiddle"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_caption_1"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="50dp">
 
 
         <ScrollView
-            android:scrollbars="none"
-            android:overScrollMode="never"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -58,132 +57,132 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:backgroundTint="@color/sign_up_edit_texts_hint"
-                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/sign_up_name"
                     android:inputType="textPersonName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_name"/>
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <EditText
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/txtName"
-                    android:backgroundTint="@color/sign_up_edit_texts_hint"
-                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:id="@+id/txtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtName"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/sign_up_email"
                     android:inputType="textEmailAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_email"/>
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <EditText
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/txtEmail"
-                    android:backgroundTint="@color/sign_up_edit_texts_hint"
-                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:id="@+id/txtPhoneNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtEmail"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/sign_up_phone"
                     android:inputType="phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_phone"/>
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <EditText
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/txtPhoneNo"
-                    android:backgroundTint="@color/sign_up_edit_texts_hint"
-                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:id="@+id/txtPassword"
-                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_password"/>
+                    android:layout_below="@id/txtPhoneNo"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/sign_up_password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <EditText
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/txtPassword"
-                    android:backgroundTint="@color/sign_up_edit_texts_hint"
-                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:id="@+id/txtConfirmPassword"
-                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_confirm_password"/>
+                    android:layout_below="@id/txtPassword"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/sign_up_edit_texts_hint"
+                    android:hint="@string/sign_up_confirm_password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textColorHint="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <TextView
                     android:id="@+id/view_vehicle_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtConfirmPassword"
                     android:layout_marginTop="15dp"
                     android:text="@string/sign_up_vehicle_types"
-                    android:layout_below="@id/txtConfirmPassword"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
                     android:id="@+id/rclr_vehicles"
-                    android:layout_below="@id/view_vehicle_cat"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"/>
+                    android:layout_height="80dp"
+                    android:layout_below="@id/view_vehicle_cat"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp" />
 
                 <TextView
                     android:id="@+id/view_policy_1"
-                    android:layout_marginTop="20dp"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/sign_up_policy_caption1"
-                    android:layout_below="@id/rclr_vehicles"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rclr_vehicles"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/sign_up_policy_caption1"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings" />
 
                 <TextView
                     android:id="@+id/view_caption_2"
-                    android:selectAllOnFocus="false"
-                    android:linksClickable="false"
-                    android:autoLink="all"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/sign_up_policy_caption2"
-                    android:layout_below="@id/view_policy_1"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_policy_1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:autoLink="all"
+                    android:linksClickable="false"
+                    android:selectAllOnFocus="false"
+                    android:text="@string/sign_up_policy_caption2"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textStyle="bold" />
 
 
                 <Button
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@id/view_caption_2"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="18sp"
-                    android:background="@drawable/sign_up_button_round"
-                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
-                    android:textAllCaps="false"
                     android:id="@+id/btnSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_up_sign_up"/>
+                    android:layout_below="@id/view_caption_2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/sign_up_button_round"
+                    android:text="@string/sign_up_sign_up"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+                    android:textSize="18sp" />
 
                 <TextView
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@id/btnSignUp"
                     android:id="@+id/viewAlreadyAMember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnSignUp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:autoLink="all"
+                    android:linksClickable="false"
                     android:paddingBottom="20dp"
                     android:selectAllOnFocus="false"
-                    android:linksClickable="false"
-                    android:autoLink="all"
-                    android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
                     android:text="@string/sign_up_already_member"
                     android:textColor="@color/sign_up_edit_texts_tint_text_headings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>

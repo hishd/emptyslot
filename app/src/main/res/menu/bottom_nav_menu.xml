@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_active_bookings"
+        android:icon="@drawable/ic_active_bookings"
+        android:title="@string/title_active_bookings" />
+
+    <item
+        android:id="@+id/navigation_inactive_bookings"
+        android:icon="@drawable/ic_inactive_bookings"
+        android:title="@string/title_inactive_bookings" />
+
+</menu>

@@ -1,7 +1,5 @@
 package com.hishd.emptyslot.Util;
 
-import com.hishd.emptyslot.Vehicle;
-
 import java.util.ArrayList;
 
 public class User {
@@ -13,7 +11,7 @@ public class User {
 
     public ArrayList<String> vehicles;
 
-    public User(){
+    public User() {
 
     }
 

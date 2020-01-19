@@ -9,8 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.hishd.emptyslot.activity_account_settings"></activity>
+        <activity android:name=".activity_add_public_parkings"></activity>
+        <activity android:name=".activity_intro_own_parking" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,18 +35,26 @@
             android:value="@string/maps_api_key" />
 
         <activity
-            android:name="com.hishd.emptyslot.activity_main_map_view"
+            android:name=".activity_location_picker"
+            android:label="@string/title_activity_location_picker" />
+        <activity
+            android:name=".activity_my_bookings"
+            android:label="@string/title_activity_my_bookings" />
+        <activity android:name=".activity_own_parkings" />
+        <activity android:name=".activity_account_settings" />
+        <activity
+            android:name=".activity_main_map_view"
             android:label="@string/title_activity_main_map_view" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.hishd.emptyslot.activity_signup" />
-        <activity android:name="com.hishd.emptyslot.activity_reset_password" />
-        <activity android:name="com.hishd.emptyslot.activity_login" />
-        <activity android:name="com.hishd.emptyslot.activity_app_intro" />
-        <activity android:name="com.hishd.emptyslot.activity_launch">
+        <activity android:name=".activity_signup" />
+        <activity android:name=".activity_reset_password" />
+        <activity android:name=".activity_login" />
+        <activity android:name=".activity_app_intro" />
+        <activity android:name=".activity_launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

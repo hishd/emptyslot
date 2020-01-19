@@ -18,9 +18,9 @@ public class IntroSliderAdapter extends PagerAdapter {
     LayoutInflater layoutInflater;
 
 
-    final String[] lottieAnimations = {"intro_nearby_spots.json","intro_book_slots.json","intro_add_parking_spaces.json","intro_contribute.json","intro_location.json"};
+    final String[] lottieAnimations = {"intro_nearby_spots.json", "intro_book_slots.json", "intro_add_parking_spaces.json", "intro_contribute.json", "intro_location.json"};
 
-    final String[] captions = {"Find Parking Spots","Book Parking Spots","Add your Parking Spaces","Contribute to Public","Provide Location Access"};
+    final String[] captions = {"Find Parking Spots", "Book Parking Spots", "Add your Parking Spaces", "Contribute to Public", "Provide Location Access"};
 
     final String[] contents = {
             "Find nearby parking spaces near your destination, with a single tap. All you need to do is to enter your destination and search for a suitable parking space.",
@@ -40,7 +40,7 @@ public class IntroSliderAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == (RelativeLayout) object;
+        return view == object;
     }
 
     @NonNull
@@ -48,11 +48,11 @@ public class IntroSliderAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = layoutInflater != null ? layoutInflater.inflate(R.layout.layout_intro_slider, container, false) : null;;
+        View view = layoutInflater != null ? layoutInflater.inflate(R.layout.layout_intro_slider, container, false) : null;
 
-        LottieAnimationView animationViewIntro = (LottieAnimationView) view.findViewById(R.id.animationViewIntro);
-        TextView txtCaption = (TextView) view.findViewById(R.id.txtCaption);
-        TextView txtContent = (TextView) view.findViewById(R.id.txtContent);
+        LottieAnimationView animationViewIntro = view.findViewById(R.id.animationViewIntro);
+        TextView txtCaption = view.findViewById(R.id.txtCaption);
+        TextView txtContent = view.findViewById(R.id.txtContent);
 
         animationViewIntro.enableMergePathsForKitKatAndAbove(true);
         animationViewIntro.setAnimation(lottieAnimations[position]);
@@ -68,6 +68,6 @@ public class IntroSliderAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((RelativeLayout)object);
+        container.removeView((RelativeLayout) object);
     }
 }

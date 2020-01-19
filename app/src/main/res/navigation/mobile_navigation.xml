@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_active_bookings">
+
+    <fragment
+        android:id="@+id/navigation_active_bookings"
+        android:name="com.hishd.emptyslot.ui.InactiveBookings.InactiveBookingFragment"
+        android:label="@string/title_active_bookings"
+        tools:layout="@layout/fragment_active_bookings" />
+
+    <fragment
+        android:id="@+id/navigation_inactive_bookings"
+        android:name="com.hishd.emptyslot.ui.ActiveBookings.ActiveBookingFragment"
+        android:label="@string/title_inactive_bookings"
+        tools:layout="@layout/fragment_inactive_bookings" />
+
+</navigation>

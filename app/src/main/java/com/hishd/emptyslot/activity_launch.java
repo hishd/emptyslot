@@ -1,10 +1,10 @@
 package com.hishd.emptyslot;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.hishd.emptyslot.Util.AppConfig;
@@ -34,21 +34,21 @@ public class activity_launch extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animator) {
 
-                if(appConfig.isUserLoggedIn()){
-                    startActivity(new Intent(activity_launch.this,activity_main_map_view.class));
+                if (appConfig.isUserLoggedIn()) {
+                    startActivity(new Intent(activity_launch.this, activity_main_map_view.class));
                     Bungee.zoom(activity_launch.this);
                     finish();
                     return;
                 }
 
-                if(appConfig.isAppIntroFinished()){
-                    startActivity(new Intent(activity_launch.this,activity_login.class));
+                if (appConfig.isAppIntroFinished()) {
+                    startActivity(new Intent(activity_launch.this, activity_login.class));
                     Bungee.zoom(activity_launch.this);
                     finish();
                     return;
                 }
 
-                startActivity(new Intent(activity_launch.this,activity_app_intro.class));
+                startActivity(new Intent(activity_launch.this, activity_app_intro.class));
                 Bungee.zoom(activity_launch.this);
                 finish();
             }

@@ -1,10 +1,5 @@
 package com.hishd.emptyslot;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.github.rubensousa.floatingtoolbar.FloatingToolbar;
 import com.google.android.gms.common.api.Status;
@@ -45,12 +46,13 @@ import java.util.Arrays;
 
 import spencerstudios.com.bungeelib.Bungee;
 
-public class activity_main_map_view extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class activity_main_map_view extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     MarkerOptions markerOptions;
 
     Button btnfocus;
+    ImageView imgEnableTracking;
     LatLng unityPlaza;
 
     private ClusterManager<SlotMarkerItem> clusterManager;
@@ -65,11 +67,16 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     Criteria criteria;
     String locationProvider;
     Location location;
-    LatLng latLng;
+    LatLng mylatLng;
     MarkerOptions myLocationMarker;
     Marker marker;
 
     AppConfig appConfig;
+
+    Boolean firstInit = true;
+    Boolean isTrackingEnabled = false;
+
+    LocationListener locationListener;
 
     void setUpCluster() {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(unityPlaza, 17.5f));
@@ -148,7 +155,20 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         btnfocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(unityPlaza, 17.5f));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 17.5f));
+            }
+        });
+
+        imgEnableTracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isTrackingEnabled) {
+                    isTrackingEnabled = false;
+                    imgEnableTracking.setImageDrawable(getDrawable(R.drawable.tracking_off));
+                } else {
+                    isTrackingEnabled = true;
+                    imgEnableTracking.setImageDrawable(getDrawable(R.drawable.tracking_on));
+                }
             }
         });
 
@@ -158,6 +178,22 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
                 if (item.getItemId() == R.id.action_my_account) {
                     startActivity(new Intent(activity_main_map_view.this, activity_account_settings.class));
                     Bungee.zoom(activity_main_map_view.this);
+                    return;
+                }
+                if (item.getItemId() == R.id.action_own_parkings) {
+                    startActivity(new Intent(activity_main_map_view.this, activity_intro_own_parking.class));
+                    Bungee.zoom(activity_main_map_view.this);
+                    return;
+                }
+                if (item.getItemId() == R.id.action_add_parkings) {
+                    startActivity(new Intent(activity_main_map_view.this, activity_add_public_parkings.class));
+                    Bungee.zoom(activity_main_map_view.this);
+                    return;
+                }
+                if (item.getItemId() == R.id.action_my_bookings) {
+                    startActivity(new Intent(activity_main_map_view.this, activity_my_bookings.class));
+                    Bungee.zoom(activity_main_map_view.this);
+                    return;
                 }
             }
 
@@ -174,10 +210,11 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
 
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME));
 
-        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setHint("Search Destination");
-        ((EditText)autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextSize(14.0f);
+        ((EditText) autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setHint("Search Destination");
+        ((EditText) autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input)).setTextSize(14.0f);
 
         btnfocus = findViewById(R.id.btnfocus);
+        imgEnableTracking = findViewById(R.id.imgEnableTracking);
         floatingToolbar = findViewById(R.id.floatingToolbar);
         fab = findViewById(R.id.fab);
 
@@ -204,40 +241,75 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     private void initLocationUpdates() {
 
         if (ContextCompat.checkSelfPermission(activity_main_map_view.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity_main_map_view.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)){
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(activity_main_map_view.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(activity_main_map_view.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
-        }else{
+        } else {
+
+            locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    mylatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                    marker.remove();
+                    myLocationMarker.position(mylatLng);
+                    marker = mMap.addMarker(myLocationMarker);
+
+                    if (firstInit) {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 17.5f));
+                        firstInit = false;
+                    }
+
+                    if (isTrackingEnabled)
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 17.5f));
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            };
+
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             criteria = new Criteria();
             locationProvider = locationManager.getBestProvider(criteria, true);
             location = locationManager.getLastKnownLocation(locationProvider);
 
-            if(location!=null){
-                onLocationChanged(location);
+            if (location != null) {
+                locationListener.onLocationChanged(location);
             }
 
-            locationManager.requestLocationUpdates(locationProvider,20000,0,activity_main_map_view.this);
+            locationManager.requestLocationUpdates(locationProvider, 2000, 0, locationListener);
         }
 
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1: {
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(activity_main_map_view.this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -283,33 +355,6 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         setListeners();
 
         initLocationUpdates();
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        latLng = new LatLng(location.getLatitude(),location.getLongitude());
-
-        marker.remove();
-        myLocationMarker.position(latLng);
-        marker = mMap.addMarker(myLocationMarker);
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17.5f));
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
     }
 
 
@@ -336,8 +381,8 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     protected void onResume() {
         super.onResume();
 
-        if(!appConfig.isUserLoggedIn()){
-            startActivity(new Intent(activity_main_map_view.this,activity_login.class));
+        if (!appConfig.isUserLoggedIn()) {
+            startActivity(new Intent(activity_main_map_view.this, activity_login.class));
             Bungee.zoom(activity_main_map_view.this);
             finish();
             return;
@@ -348,8 +393,8 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     protected void onRestart() {
         super.onRestart();
 
-        if(!appConfig.isUserLoggedIn()){
-            startActivity(new Intent(activity_main_map_view.this,activity_login.class));
+        if (!appConfig.isUserLoggedIn()) {
+            startActivity(new Intent(activity_main_map_view.this, activity_login.class));
             Bungee.zoom(activity_main_map_view.this);
             finish();
             return;
