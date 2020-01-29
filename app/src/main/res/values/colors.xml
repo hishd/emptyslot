@@ -21,4 +21,7 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="parking_slot">#4F3F91</color>
+    <color name="public_parking_slot">#0266B0</color>
+
 </resources>

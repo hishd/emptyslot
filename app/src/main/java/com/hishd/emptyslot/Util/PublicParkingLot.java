@@ -15,13 +15,13 @@ public class PublicParkingLot {
     public boolean is_approved;
     public boolean smart_parking_active;
 
-    public ArrayList<PublicParkingNode> parking_nodes;
+    public ArrayList<ParkingNode> parking_nodes;
 
     public PublicParkingLot() {
 
     }
 
-    public PublicParkingLot(String parking_name, String landmarks, String available_slots, String special_notes, double location_lat, double location_lon, String image_url, boolean is_temporary, boolean is_approved, boolean smart_parking_active, ArrayList<PublicParkingNode> parking_nodes) {
+    public PublicParkingLot(String parking_name, String landmarks, String available_slots, String special_notes, double location_lat, double location_lon, String image_url, boolean is_temporary, boolean is_approved, boolean smart_parking_active, ArrayList<ParkingNode> parking_nodes) {
         this.parking_name = parking_name;
         this.landmarks = landmarks;
         this.available_slots = available_slots;

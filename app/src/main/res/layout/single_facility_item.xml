@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRoot"
+    android:layout_width="60dp"
+    android:layout_height="90dp"
+    android:layout_marginEnd="8dp"
+    android:background="@color/colorAccent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgFacility"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:paddingTop="10dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/txtFacilityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgFacility"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Sample Text"
+        android:textAlignment="center"
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="13sp" />
+
+</RelativeLayout>

@@ -4,24 +4,32 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.andrognito.flashbar.Flashbar;
 import com.andrognito.flashbar.anim.FlashAnim;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,12 +39,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.maps.android.clustering.ClusterManager;
 import com.hishd.emptyslot.R;
 import com.hishd.emptyslot.Vehicle;
 import com.hishd.emptyslot.activity_login;
 import com.hishd.emptyslot.activity_main_map_view;
+import com.hishd.emptyslot.activity_public_parking;
+import com.hishd.emptyslot.activity_view_private_parking;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import spencerstudios.com.bungeelib.Bungee;
@@ -56,6 +69,11 @@ public class FirebaseES {
     AppConfig appConfig;
     ParkingInquiries parkingInquiries;
     PublicParkingLot publicParkingLot;
+    PrivateParkingLot privateParkingLot;
+    ClusterManager clusterManager;
+    int hw_slots = 0;
+    ChildEventListener public_parking_listner;
+    private GoogleMap mMap;
 
     public FirebaseES(Context context) {
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -78,8 +96,311 @@ public class FirebaseES {
             dialog.cancel();
     }
 
+    public void loadPublicParkingInfo(final Activity activity, String dbReferenace) {
+        if (dbReferenace == null) {
+            Toast.makeText(activity, "Failed to Load Public Parking Information", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final TextView txtParkingName = activity.findViewById(R.id.txtParkingName);
+        final TextView txtTotalSpaces = activity.findViewById(R.id.txtTotalSpaces);
+        final TextView txtParkingCategory = activity.findViewById(R.id.txtParkingCategory);
+        final TextView txtParkingNameCaption = activity.findViewById(R.id.txtParkingNameCaption);
+        final TextView txtLandmarks = activity.findViewById(R.id.txtLandmarks);
+        final TextView txtSpecialInfo = activity.findViewById(R.id.txtSpecialInfo);
+        final TextView txtSmartParkingArea = activity.findViewById(R.id.txtSmartParkingArea);
+        final ImageView imgParkingLot = activity.findViewById(R.id.imgParkingLot);
+        final Button btnNavigate = activity.findViewById(R.id.btnNavigate);
+
+        databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("parking_lot").child("public_parking").child(dbReferenace).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    Log.i("Public Parking", dataSnapshot.toString());
+                    publicParkingLot = dataSnapshot.getValue(PublicParkingLot.class);
+                    txtParkingName.setText(publicParkingLot.parking_name);
+                    txtTotalSpaces.setText(publicParkingLot.available_slots);
+                    txtParkingCategory.setText(publicParkingLot.is_temporary ? "Temporary" : "General");
+                    txtParkingNameCaption.setText(publicParkingLot.parking_name);
+                    txtLandmarks.setText(publicParkingLot.landmarks);
+                    txtSpecialInfo.setText(publicParkingLot.special_notes);
+                    txtSmartParkingArea.setText(publicParkingLot.smart_parking_active ? "YES" : "NO");
+                    Glide.with(activity).load(publicParkingLot.image_url).into(imgParkingLot);
+
+                    if (publicParkingLot.is_temporary)
+                        txtParkingCategory.setTextColor(Color.RED);
+
+                    btnNavigate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", publicParkingLot.location_lat, publicParkingLot.location_lon);
+                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void loadPrivateParkingInfo(final Activity activity, String dbReferenace, final RecyclerView rclr_facilities) {
+
+        if (dbReferenace == null) {
+            Toast.makeText(activity, "Failed to Load Private Parking Information", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final TextView txtParkingName = activity.findViewById(R.id.txtParkingName);
+        final TextView txtTotalSpaces = activity.findViewById(R.id.txtTotalSpaces);
+        final TextView txtAvailability = activity.findViewById(R.id.txtAvailability);
+        final TextView txtParkingNameCaption = activity.findViewById(R.id.txtParkingNameCaption);
+        final TextView txtParkingRate = activity.findViewById(R.id.txtParkingRate);
+        final TextView txtSpecialInfo = activity.findViewById(R.id.txtSpecialInfo);
+        final TextView txtAvailableSpaces = activity.findViewById(R.id.txtAvailableSpaces);
+        final ImageView imgParkingLot = activity.findViewById(R.id.imgParkingLot);
+        final Button btnNavigate = activity.findViewById(R.id.btnNavigate);
+
+        databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("parking_lot").child("private_parking").child(dbReferenace).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    Log.i("Private Parking", dataSnapshot.toString());
+                    privateParkingLot = dataSnapshot.getValue(PrivateParkingLot.class);
+                    txtParkingName.setText(privateParkingLot.lot_name);
+                    txtTotalSpaces.setText((String.valueOf(privateParkingLot.total_slots)));
+                    txtAvailability.setText(privateParkingLot.availability.toUpperCase());
+                    txtParkingNameCaption.setText(privateParkingLot.lot_name);
+                    txtParkingRate.setText((String.valueOf(privateParkingLot.rate_hr)));
+                    txtSpecialInfo.setText(privateParkingLot.info);
+                    txtAvailableSpaces.setText((String.valueOf(privateParkingLot.available_slots)));
+                    Glide.with(activity).load(privateParkingLot.image_url).into(imgParkingLot);
+
+                    ArrayList<Facility> facilityArrayList;
+                    ParkingFacilityAdapter parkingFacilityAdapter;
+
+                    facilityArrayList = new ArrayList<>();
+                    parkingFacilityAdapter = new ParkingFacilityAdapter(context, facilityArrayList);
+                    rclr_facilities.setAdapter(parkingFacilityAdapter);
+
+                    if (privateParkingLot.facilities.get("card_payments")) {
+                        Facility facility = new Facility("Card Payments", R.drawable.card_payments, R.drawable.facility_card_payment_bg);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("cctv")) {
+                        Facility facility = new Facility("CCTV", R.drawable.cctv, R.drawable.facility_cctv_bg);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("closed_area")) {
+                        Facility facility = new Facility("Closed Area", R.drawable.closed_area, R.drawable.facility_closed_area);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("ev_points")) {
+                        Facility facility = new Facility("EV Charge", R.drawable.ev_points, R.drawable.facility_evpoint_bg);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("food_court")) {
+                        Facility facility = new Facility("Food Court", R.drawable.food_court, R.drawable.facility_foodcourt_bg);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("security")) {
+                        Facility facility = new Facility("Security", R.drawable.security, R.drawable.facility_security_bg);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("wash_rooms")) {
+                        Facility facility = new Facility("Wash Rooms", R.drawable.wash_rooms, R.drawable.facility_washroom);
+                        facilityArrayList.add(facility);
+                    }
+                    if (privateParkingLot.facilities.get("wifi")) {
+                        Facility facility = new Facility("WiFi", R.drawable.wifi, R.drawable.facility_wifi_bg);
+                        facilityArrayList.add(facility);
+                    }
+                    parkingFacilityAdapter.setFacilities(facilityArrayList);
+
+                    btnNavigate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", privateParkingLot.loc_lat, privateParkingLot.loc_lng);
+                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(activity, "Failed to Load Parking Information", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        databaseReference.child("parking_lot").child("private_parking").child(dbReferenace).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    hw_slots = 0;
+                    privateParkingLot = dataSnapshot.getValue(PrivateParkingLot.class);
+                    txtAvailability.setText(privateParkingLot.availability);
+
+                    for (Map.Entry<String, ParkingNode> node : privateParkingLot.parking_slots.entrySet())
+                        if (!node.getValue().status) hw_slots++;
+
+                    txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots)));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void populateParkings(GoogleMap mMap) {
+        this.mMap = mMap;
+        clusterManager = new ClusterManager<SlotMarkerItem>(context, mMap);
+        mMap.setOnCameraIdleListener(clusterManager);
+        mMap.setOnMarkerClickListener(clusterManager);
+
+        final PublicClusterRenderer clusterRenderer = new PublicClusterRenderer(context, mMap, clusterManager);
+
+        clusterManager.setRenderer(clusterRenderer);
+        clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<SlotMarkerItem>() {
+            @Override
+            public boolean onClusterItemClick(SlotMarkerItem slotMarkerItem) {
+                if (slotMarkerItem.isPublicParking()) {
+                    context.startActivity(new Intent(context, activity_public_parking.class).putExtra("REFERANCE", slotMarkerItem.getParkingID()));
+                }
+                if (!slotMarkerItem.isPublicParking()) {
+                    context.startActivity(new Intent(context, activity_view_private_parking.class).putExtra("REFERANCE", slotMarkerItem.getParkingID()));
+                }
+                return false;
+            }
+        });
+
+        populatePublicParkings();
+        populatePrivateParkings();
+    }
+
+
+    private void populatePublicParkings() {
+
+        databaseReference = firebaseDatabase.getReference("parking_lot/public_parking");
+
+//        public_parking_listner = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        };
+//        databaseReference.addChildEventListener(public_parking_listner);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        publicParkingLot = child.getValue(PublicParkingLot.class);
+                        clusterManager.addItem(new SlotMarkerItem(child.getKey(), true, publicParkingLot.parking_name, publicParkingLot.location_lat, publicParkingLot.location_lon));
+                    }
+                } else {
+                    Log.i("Public parkings", "No Public Parking Detected");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void populatePrivateParkings() {
+
+        databaseReference = firebaseDatabase.getReference("parking_lot/private_parking");
+
+//        public_parking_listner = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        };
+//        databaseReference.addChildEventListener(public_parking_listner);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        privateParkingLot = child.getValue(PrivateParkingLot.class);
+                        clusterManager.addItem(new SlotMarkerItem(child.getKey(), false, privateParkingLot.lot_name, privateParkingLot.loc_lat, privateParkingLot.loc_lng));
+                    }
+                } else {
+                    Log.i("Private parking", "No Private Parking Detected");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void addPublicParking(final Activity activity, final String parkingName, final String landMarks, final String noOfSlots, final String specialNotes, final double locationLat, final double locationLon, final byte[] imageFile, final boolean isTemp) {
-        databaseReference = firebaseDatabase.getReference("parking/public");
+        databaseReference = firebaseDatabase.getReference("parking_lot/public_parking");
         showProgressDialog();
 
         databaseReference.child(appConfig.getLogedUserID() + "_" + parkingName).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -124,8 +445,8 @@ public class FirebaseES {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
 
-                            publicParkingLot = new PublicParkingLot(parkingName, landMarks, noOfSlots, specialNotes, locationLat, locationLon, task.getResult().toString(), isTemp, false, false, new ArrayList<PublicParkingNode>());
-                            databaseReference = firebaseDatabase.getReference("parking/public");
+                            publicParkingLot = new PublicParkingLot(parkingName, landMarks, noOfSlots, specialNotes, locationLat, locationLon, task.getResult().toString(), isTemp, false, false, new ArrayList<ParkingNode>());
+                            databaseReference = firebaseDatabase.getReference("parking_lot/public_parking");
 
                             databaseReference.child(appConfig.getLogedUserID() + "_" + parkingName).setValue(publicParkingLot).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

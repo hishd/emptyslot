@@ -1,7 +1,6 @@
 package com.hishd.emptyslot;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -39,8 +37,9 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.hishd.emptyslot.Util.AppConfig;
+import com.hishd.emptyslot.Util.FirebaseES;
+import com.hishd.emptyslot.Util.SlotMarkerItem;
 
 import java.util.Arrays;
 
@@ -54,6 +53,8 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
     Button btnfocus;
     ImageView imgEnableTracking;
     LatLng unityPlaza;
+
+    FirebaseES firebaseES;
 
     private ClusterManager<SlotMarkerItem> clusterManager;
     PlacesClient placesClient;
@@ -78,28 +79,28 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
 
     LocationListener locationListener;
 
-    void setUpCluster() {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(unityPlaza, 17.5f));
-
-        clusterManager = new ClusterManager<SlotMarkerItem>(this, mMap);
-        mMap.setOnCameraIdleListener(clusterManager);
-        mMap.setOnMarkerClickListener(clusterManager);
-
-        addMarkers();
-    }
-
-    private void addMarkers() {
-        double lat = 6.9063898;
-        double lng = 79.8618613;
-
-        for (int i = 0; i < 10; i++) {
-            double offset = i / 60d;
-            lat = lat + offset;
-            lng = lng + offset;
-            SlotMarkerItem offsetItem = new SlotMarkerItem(lat, lng);
-            clusterManager.addItem(offsetItem);
-        }
-    }
+//    void setUpCluster() {
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(unityPlaza, 17.5f));
+//
+//        clusterManager = new ClusterManager<SlotMarkerItem>(this, mMap);
+//        mMap.setOnCameraIdleListener(clusterManager);
+//        mMap.setOnMarkerClickListener(clusterManager);
+//
+//        addMarkers();
+//    }
+//
+//    private void addMarkers() {
+//        double lat = 6.9063898;
+//        double lng = 79.8618613;
+//
+//        for (int i = 0; i < 10; i++) {
+//            double offset = i / 60d;
+//            lat = lat + offset;
+//            lng = lng + offset;
+//            SlotMarkerItem offsetItem = new SlotMarkerItem(lat, lng);
+//            clusterManager.addItem(offsetItem);
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +116,7 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
 
         unityPlaza = new LatLng(6.8935743, 79.8544723);
 
+        firebaseES = new FirebaseES(activity_main_map_view.this);
 
 //        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
 //                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -340,11 +342,11 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
 //        mMap.addMarker(markerOptions);
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nibm, 15.0f));
 
-        setUpCluster();
-
-        final CustomClusterRenderer renderer = new CustomClusterRenderer(this, mMap, clusterManager);
-
-        clusterManager.setRenderer(renderer);
+//        setUpCluster();
+//
+//        final CustomClusterRenderer renderer = new CustomClusterRenderer(this, mMap, clusterManager);
+//
+//        clusterManager.setRenderer(renderer);
 
         //Init Resources
 
@@ -355,27 +357,29 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         setListeners();
 
         initLocationUpdates();
+
+        firebaseES.populateParkings(mMap);
     }
 
 
-    public class CustomClusterRenderer extends DefaultClusterRenderer<SlotMarkerItem> {
-
-        private final Context mContext;
-
-        public CustomClusterRenderer(Context context, GoogleMap map,
-                                     ClusterManager<SlotMarkerItem> clusterManager) {
-            super(context, map, clusterManager);
-
-            mContext = context;
-        }
-
-        @Override
-        protected void onBeforeClusterItemRendered(SlotMarkerItem item, MarkerOptions markerOptions) {
-            final BitmapDescriptor markerDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker_dot);
-
-            markerOptions.icon(markerDescriptor).snippet(item.getTitle());
-        }
-    }
+//    public class CustomClusterRenderer extends DefaultClusterRenderer<SlotMarkerItem> {
+//
+//        private final Context mContext;
+//
+//        public CustomClusterRenderer(Context context, GoogleMap map,
+//                                     ClusterManager<SlotMarkerItem> clusterManager) {
+//            super(context, map, clusterManager);
+//
+//            mContext = context;
+//        }
+//
+//        @Override
+//        protected void onBeforeClusterItemRendered(SlotMarkerItem item, MarkerOptions markerOptions) {
+//            final BitmapDescriptor markerDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker_dot);
+//
+//            markerOptions.icon(markerDescriptor).snippet(item.getTitle());
+//        }
+//    }
 
     @Override
     protected void onResume() {
