@@ -41,6 +41,8 @@
     <string name="account_settings_change_name">Change Name</string>
     <string name="account_settings_change_email">Change Email</string>
     <string name="account_settings_change_password">Change Password</string>
+    <string name="account_settings_add_vehicles">Add new Vehicles</string>
+    <string name="account_settings_add_vehicles_add">Add Vehicle</string>
     <string name="account_settings_general">General</string>
     <string name="account_settings_help_support">Help and Support</string>
     <string name="account_settings_provide_feedback">Provide Feedback</string>
@@ -89,6 +91,19 @@
     <string name="add_public_parking_what_is_temporary_parking"><u>Temporary parking spaces?</u></string>
     <string name="add_public_parking_image">Select Images of the Parking Space</string>
     <string name="add_public_parking_add_parking">Add Parking</string>
+
+    <string name="add_vehicles_heading_1">My Vehicles</string>
+    <string name="add_vehicles_heading_2">Manage my Vehicles</string>
+    <string name="add_vehicles_select_category">Select Vehicle Category</string>
+    <string name="add_vehicles_vehicle_reg_no">Registration No</string>
+    <string name="add_vehicles_vehicle_model">Vehicle Model</string>
+    <string name="add_vehicles_add_vehicle">Add Vehicle</string>
+    <string name="add_vehicles_my_vehicles">My Vehicles</string>
+
+    <string name="booking_private_heading1">Place Booking</string>
+
+    <string name="view_active_bookings_heading">Active Bookings</string>
+    <string name="view_expired_bookings_heading">Expired Bookings</string>
 
 
     <string name="loading">Loading..</string>

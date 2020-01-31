@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRoot"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="@dimen/_100sdp"
+    android:background="@drawable/single_vehicle_item_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtVehicleModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="5dp"
+        android:text="Sample Text"
+        android:textAlignment="center"
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txtVehicleNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtVehicleModel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Sample Text"
+        android:textAlignment="center"
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/imgCategory"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_below="@id/txtVehicleNo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/car" />
+
+</RelativeLayout>

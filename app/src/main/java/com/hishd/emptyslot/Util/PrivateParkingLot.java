@@ -18,6 +18,7 @@ public class PrivateParkingLot {
     public int available_slots;
     public int booked_slots;
     public int accomodated_slots;
+    public HashMap<String, Booking> bookings;
 
     public PrivateParkingLot() {
 

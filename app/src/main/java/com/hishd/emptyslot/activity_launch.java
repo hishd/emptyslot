@@ -3,6 +3,7 @@ package com.hishd.emptyslot;
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,23 +35,31 @@ public class activity_launch extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animator) {
 
-                if (appConfig.isUserLoggedIn()) {
-                    startActivity(new Intent(activity_launch.this, activity_main_map_view.class));
-                    Bungee.zoom(activity_launch.this);
-                    finish();
-                    return;
-                }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                if (appConfig.isAppIntroFinished()) {
-                    startActivity(new Intent(activity_launch.this, activity_login.class));
-                    Bungee.zoom(activity_launch.this);
-                    finish();
-                    return;
-                }
+                        if (appConfig.isUserLoggedIn()) {
+                            startActivity(new Intent(activity_launch.this, activity_main_map_view.class));
+                            Bungee.zoom(activity_launch.this);
+                            finish();
+                            return;
+                        }
 
-                startActivity(new Intent(activity_launch.this, activity_app_intro.class));
-                Bungee.zoom(activity_launch.this);
-                finish();
+                        if (appConfig.isAppIntroFinished()) {
+                            startActivity(new Intent(activity_launch.this, activity_login.class));
+                            Bungee.zoom(activity_launch.this);
+                            finish();
+                            return;
+                        }
+
+                        startActivity(new Intent(activity_launch.this, activity_app_intro.class));
+                        Bungee.zoom(activity_launch.this);
+                        finish();
+
+                    }
+                }, 1000);
+
             }
 
             @Override

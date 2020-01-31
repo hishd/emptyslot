@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_two"
+    tools:context=".activity_booking_private_parking">
+
+    <ImageView
+        android:id="@+id/view_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/header_gradient_wave_center" />
+
+    <RelativeLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/view_top"
+        android:layout_alignBottom="@id/view_top"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txtParkingName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Parking Lot ID"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/view_caption_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtParkingName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@string/booking_private_heading1"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationViewIntro"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/layout_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="place_booking.json"
+        app:lottie_loop="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/animationViewIntro"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parking Name :"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtParkingNameCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/txt1"
+            android:text="Parking Lot 001"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt1"
+            android:layout_marginTop="10dp"
+            android:text="Parking Rates (LKR/Hr) :"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtParkingRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/txt2"
+            android:text="70.00"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtEstTimeCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt2"
+            android:layout_marginTop="10dp"
+            android:text="Estimated Time :"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtEstTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt2"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/txtEstTimeCaption"
+            android:text="15 Minutes"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtEstTimeCaption"
+            android:layout_marginTop="20dp"
+            android:text="Select Vehicle : "
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtSelectedVehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtEstTimeCaption"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/txt3"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rclr_myVehicles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/txtBottom"
+            android:layout_below="@id/txt3"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/txtBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnBookNow"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="To add vehicles goto Account - Add Vehicles"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings" />
+
+        <Button
+            android:id="@+id/btnBookNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#19A93E"
+            android:text="Book Now"
+            android:textColor="@color/sign_up_edit_texts_tint_text_headings" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

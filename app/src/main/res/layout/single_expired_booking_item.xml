@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:background="@drawable/gradient_booking_item"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingEnd="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <ImageView
+        android:id="@+id/imgParking"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:src="@drawable/expired" />
+
+
+    <TextView
+        android:id="@+id/txtVehicleNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:text="Vehicle Number"
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="@dimen/_13sdp" />
+
+    <TextView
+        android:id="@+id/txtLotName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtVehicleNo"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Vehicle Lot Name"
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/txtBookedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtLotName"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Booked Time"
+        android:textColor="@color/sign_up_edit_texts_tint_text_headings"
+        android:textSize="@dimen/_12sdp" />
+
+</RelativeLayout>

@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_public_parking"></activity>
+        <activity android:name=".activity_booking_private_parking"></activity>
+        <activity android:name=".activity_add_vehicles" />
+        <activity android:name=".activity_public_parking" />
         <activity android:name=".activity_view_private_parking" />
         <activity android:name=".activity_add_public_parkings" />
         <activity android:name=".activity_intro_own_parking" />

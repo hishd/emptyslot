@@ -64,6 +64,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/layout_total_spaces"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -94,6 +95,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_available_spaces"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

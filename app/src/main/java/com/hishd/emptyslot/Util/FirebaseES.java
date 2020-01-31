@@ -8,10 +8,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +46,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.maps.android.clustering.ClusterManager;
 import com.hishd.emptyslot.R;
 import com.hishd.emptyslot.Vehicle;
+import com.hishd.emptyslot.activity_booking_private_parking;
 import com.hishd.emptyslot.activity_login;
 import com.hishd.emptyslot.activity_main_map_view;
 import com.hishd.emptyslot.activity_public_parking;
@@ -52,7 +57,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import spencerstudios.com.bungeelib.Bungee;
 
 public class FirebaseES {
 
@@ -74,6 +78,8 @@ public class FirebaseES {
     int hw_slots = 0;
     ChildEventListener public_parking_listner;
     private GoogleMap mMap;
+    Animation fadeIn, enterLeft, enterRight, enterFromTop;
+
 
     public FirebaseES(Context context) {
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -96,6 +102,107 @@ public class FirebaseES {
             dialog.cancel();
     }
 
+    public void checkAndPlaceBooking(final String lotId, final String parkingName, final String vehicleNo) {
+        databaseReference = firebaseDatabase.getReference();
+        showProgressDialog();
+
+        databaseReference.child("users").child(appConfig.getLogedUserID()).child("bookings").child("active").child(vehicleNo).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    Booking booking = new Booking(appConfig.getLogedUserID(), vehicleNo, (DateFormat.format("dd-MM-yyyy hh:mm", new java.util.Date()).toString()), lotId, parkingName);
+                    placeBooking(booking);
+                } else {
+                    showAlertDialog("A booking is active for the Selected Vehicle").show();
+                    vibrate.vibrate(100);
+                    dismissProgressDialog();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                dismissProgressDialog();
+            }
+        });
+    }
+
+    private void placeBooking(final Booking booking) {
+        databaseReference = firebaseDatabase.getReference();
+        databaseReference.child("parking_lot").child("private_parking").child(booking.lot_id).child("bookings").child(booking.vehicle_no).setValue(booking).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.i("FIREBASE", "USER BOOKING DATA ADDED");
+//                    Toast.makeText(context, "Booking Placed", Toast.LENGTH_LONG).show();
+                    dismissProgressDialog();
+                    databaseReference.child("users").child(appConfig.getLogedUserID()).child("bookings").child("active").child(booking.vehicle_no).setValue(booking);
+                    new SweetAlertDialog(context).setTitleText("Booking Placed").setContentText("Booking Placed Successfully").show();
+                } else {
+                    Log.i("FIREBASE", "FAILED TO ADD Booking");
+                    new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText("Something went wrong!")
+                            .show();
+                }
+                dismissProgressDialog();
+            }
+        });
+    }
+
+    public void removeVehicle(String vehNo) {
+        showProgressDialog();
+        databaseReference = firebaseDatabase.getReference();
+        databaseReference.child("users").child(appConfig.getLogedUserID()).child("my_vehicles").child(vehNo).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                dismissProgressDialog();
+                if (task.isSuccessful())
+                    Toast.makeText(context, "Vehicle Removed.", Toast.LENGTH_LONG).show();
+                else
+                    showAlertDialog("Unable to remove vehicle");
+            }
+        });
+    }
+
+    public void checkAndAddVehicle(final MyVehicle vehicle) {
+        databaseReference = firebaseDatabase.getReference();
+        showProgressDialog();
+
+        databaseReference.child("users").child(appConfig.getLogedUserID()).child("my_vehicles").child(vehicle.reg_no).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null)
+                    addMyVehicle(vehicle);
+                else {
+                    showAlertDialog("Vehicle Already Exists").show();
+                    vibrate.vibrate(100);
+                    dismissProgressDialog();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                dismissProgressDialog();
+            }
+        });
+    }
+
+    public void addMyVehicle(MyVehicle vehicle) {
+        databaseReference = firebaseDatabase.getReference();
+        databaseReference.child("users").child(appConfig.getLogedUserID()).child("my_vehicles").child(vehicle.reg_no).setValue(vehicle).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.i("FIREBASE", "USER VEHICLE DATA ADDED");
+                    Toast.makeText(context, "Vehicle Added", Toast.LENGTH_LONG).show();
+                    dismissProgressDialog();
+                } else
+                    Log.i("FIREBASE", "FAILED TO ADD USER");
+                dismissProgressDialog();
+            }
+        });
+    }
+
     public void loadPublicParkingInfo(final Activity activity, String dbReferenace) {
         if (dbReferenace == null) {
             Toast.makeText(activity, "Failed to Load Public Parking Information", Toast.LENGTH_LONG).show();
@@ -111,6 +218,12 @@ public class FirebaseES {
         final TextView txtSmartParkingArea = activity.findViewById(R.id.txtSmartParkingArea);
         final ImageView imgParkingLot = activity.findViewById(R.id.imgParkingLot);
         final Button btnNavigate = activity.findViewById(R.id.btnNavigate);
+        final LinearLayout layout_total_spaces = activity.findViewById(R.id.layout_total_spaces);
+
+        fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_enter);
+        enterLeft = AnimationUtils.loadAnimation(context, R.anim.slide_left_enter);
+        enterRight = AnimationUtils.loadAnimation(context, R.anim.swipe_right_enter);
+        enterFromTop = AnimationUtils.loadAnimation(context, R.anim.slide_down_enter);
 
         databaseReference = firebaseDatabase.getReference();
 
@@ -128,6 +241,14 @@ public class FirebaseES {
                     txtSpecialInfo.setText(publicParkingLot.special_notes);
                     txtSmartParkingArea.setText(publicParkingLot.smart_parking_active ? "YES" : "NO");
                     Glide.with(activity).load(publicParkingLot.image_url).into(imgParkingLot);
+
+                    layout_total_spaces.startAnimation(enterFromTop);
+                    txtParkingNameCaption.startAnimation(enterLeft);
+                    txtLandmarks.startAnimation(enterRight);
+                    txtSmartParkingArea.startAnimation(enterLeft);
+                    btnNavigate.startAnimation(fadeIn);
+
+                    txtParkingName.startAnimation(enterFromTop);
 
                     if (publicParkingLot.is_temporary)
                         txtParkingCategory.setTextColor(Color.RED);
@@ -151,7 +272,7 @@ public class FirebaseES {
 
     }
 
-    public void loadPrivateParkingInfo(final Activity activity, String dbReferenace, final RecyclerView rclr_facilities) {
+    public void loadPrivateParkingInfo(final Activity activity, final String dbReferenace, final RecyclerView rclr_facilities) {
 
         if (dbReferenace == null) {
             Toast.makeText(activity, "Failed to Load Private Parking Information", Toast.LENGTH_LONG).show();
@@ -167,6 +288,13 @@ public class FirebaseES {
         final TextView txtAvailableSpaces = activity.findViewById(R.id.txtAvailableSpaces);
         final ImageView imgParkingLot = activity.findViewById(R.id.imgParkingLot);
         final Button btnNavigate = activity.findViewById(R.id.btnNavigate);
+        final Button btnBookNow = activity.findViewById(R.id.btnBookNow);
+        final LinearLayout layout_total_spaces = activity.findViewById(R.id.layout_total_spaces);
+        final LinearLayout layout_available_spaces = activity.findViewById(R.id.layout_available_spaces);
+
+        fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_enter);
+        enterLeft = AnimationUtils.loadAnimation(context, R.anim.slide_left_enter);
+        enterRight = AnimationUtils.loadAnimation(context, R.anim.swipe_right_enter);
 
         databaseReference = firebaseDatabase.getReference();
 
@@ -184,6 +312,11 @@ public class FirebaseES {
                     txtSpecialInfo.setText(privateParkingLot.info);
                     txtAvailableSpaces.setText((String.valueOf(privateParkingLot.available_slots)));
                     Glide.with(activity).load(privateParkingLot.image_url).into(imgParkingLot);
+
+                    layout_available_spaces.startAnimation(enterLeft);
+                    layout_total_spaces.startAnimation(enterRight);
+                    btnNavigate.startAnimation(fadeIn);
+                    btnBookNow.startAnimation(fadeIn);
 
                     ArrayList<Facility> facilityArrayList;
                     ParkingFacilityAdapter parkingFacilityAdapter;
@@ -234,6 +367,18 @@ public class FirebaseES {
                         }
                     });
 
+                    btnBookNow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            activity.startActivity(new Intent(context, activity_booking_private_parking.class)
+                                    .putExtra("PARKING_ID", dbReferenace)
+                                    .putExtra("PARKING_NAME", privateParkingLot.lot_name)
+                                    .putExtra("PARKING_RATE", privateParkingLot.rate_hr)
+                                    .putExtra("PARKING_LAT", privateParkingLot.loc_lat)
+                                    .putExtra("PARKING_LNG", privateParkingLot.loc_lng));
+                        }
+                    });
+
                 } else {
                     Toast.makeText(activity, "Failed to Load Parking Information", Toast.LENGTH_LONG).show();
                 }
@@ -255,9 +400,7 @@ public class FirebaseES {
 
                     for (Map.Entry<String, ParkingNode> node : privateParkingLot.parking_slots.entrySet())
                         if (!node.getValue().status) hw_slots++;
-
-                    txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots)));
-
+                    txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots - privateParkingLot.bookings.size())));
                 }
             }
 
@@ -733,7 +876,6 @@ public class FirebaseES {
                         appConfig.setUserLoggedIn();
                         appConfig.setLoggedUserID(phone);
                         context.startActivity(new Intent(context, activity_main_map_view.class));
-                        Bungee.zoom(context);
                         ((Activity) context).finish();
                     } else {
                         showAlertDialog("Invalid username or password").show();
@@ -852,6 +994,4 @@ public class FirebaseES {
                         .accelerate())
                 .build();
     }
-
-
 }

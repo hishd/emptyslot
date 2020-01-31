@@ -1,6 +1,7 @@
 package com.hishd.emptyslot;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class activity_account_settings extends AppCompatActivity {
     TextView txtChangeName;
     TextView txtChangeEmail;
     TextView txtChangePassword;
+    TextView txtAddNewVehicles;
     Button btnLogout;
     AppConfig appConfig;
     String UserID;
@@ -61,6 +63,7 @@ public class activity_account_settings extends AppCompatActivity {
         txtChangeEmail = findViewById(R.id.txtChangeEmail);
         txtChangePassword = findViewById(R.id.txtChangePassword);
         btnLogout = findViewById(R.id.btnLogout);
+        txtAddNewVehicles = findViewById(R.id.txtAddNewVehicles);
 
         appConfig = new AppConfig(this);
         firebaseES = new FirebaseES(this);
@@ -108,6 +111,13 @@ public class activity_account_settings extends AppCompatActivity {
             public void onClick(View v) {
                 appConfig.setUserLoggedOut();
                 finish();
+            }
+        });
+
+        txtAddNewVehicles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(activity_account_settings.this, activity_add_vehicles.class));
             }
         });
     }

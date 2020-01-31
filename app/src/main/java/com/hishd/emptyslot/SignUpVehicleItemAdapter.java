@@ -78,7 +78,6 @@ public class SignUpVehicleItemAdapter extends RecyclerView.Adapter<SignUpVehicle
                     imgSelected.setVisibility(veh.isChecked() ? View.VISIBLE : View.GONE);
                 }
             });
-
         }
     }
 }

@@ -19,6 +19,7 @@ public class activity_view_private_parking extends AppCompatActivity {
     FirebaseES firebaseES;
     RecyclerView rclr_facilities;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class activity_view_private_parking extends AppCompatActivity {
 
         img_back = findViewById(R.id.img_back);
         rclr_facilities = findViewById(R.id.rclr_facilities);
+
 
         LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rclr_facilities.setLayoutManager(horizontalLayoutManagaer);

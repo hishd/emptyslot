@@ -157,7 +157,7 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         btnfocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 17.5f));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 16.0f));
             }
         });
 
@@ -229,6 +229,7 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
         placesClient = Places.createClient(this);
 
         initMyLocationMarker();
+
     }
 
     private void initMyLocationMarker() {
@@ -264,12 +265,12 @@ public class activity_main_map_view extends FragmentActivity implements OnMapRea
                     marker = mMap.addMarker(myLocationMarker);
 
                     if (firstInit) {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 17.5f));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 16.0f));
                         firstInit = false;
                     }
 
                     if (isTrackingEnabled)
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 17.5f));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylatLng, 16.0f));
                 }
 
                 @Override
