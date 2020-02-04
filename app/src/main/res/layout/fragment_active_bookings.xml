@@ -20,14 +20,23 @@
 
 
         <TextView
+            android:layout_width="match_parent"
             android:id="@+id/view_caption_head"
-            android:layout_width="wrap_content"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
             android:text="@string/view_active_bookings_heading"
             android:textColor="@color/sign_up_edit_texts_tint_text_headings"
             android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/imgQR"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:src="@drawable/qr_code" />
+
     </RelativeLayout>
 
     <RelativeLayout

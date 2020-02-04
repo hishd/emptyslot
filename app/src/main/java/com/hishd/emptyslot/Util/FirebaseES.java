@@ -11,8 +11,6 @@ import android.os.Vibrator;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -78,7 +76,6 @@ public class FirebaseES {
     int hw_slots = 0;
     ChildEventListener public_parking_listner;
     private GoogleMap mMap;
-    Animation fadeIn, enterLeft, enterRight, enterFromTop;
 
 
     public FirebaseES(Context context) {
@@ -220,11 +217,6 @@ public class FirebaseES {
         final Button btnNavigate = activity.findViewById(R.id.btnNavigate);
         final LinearLayout layout_total_spaces = activity.findViewById(R.id.layout_total_spaces);
 
-        fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_enter);
-        enterLeft = AnimationUtils.loadAnimation(context, R.anim.slide_left_enter);
-        enterRight = AnimationUtils.loadAnimation(context, R.anim.swipe_right_enter);
-        enterFromTop = AnimationUtils.loadAnimation(context, R.anim.slide_down_enter);
-
         databaseReference = firebaseDatabase.getReference();
 
         databaseReference.child("parking_lot").child("public_parking").child(dbReferenace).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -241,14 +233,6 @@ public class FirebaseES {
                     txtSpecialInfo.setText(publicParkingLot.special_notes);
                     txtSmartParkingArea.setText(publicParkingLot.smart_parking_active ? "YES" : "NO");
                     Glide.with(activity).load(publicParkingLot.image_url).into(imgParkingLot);
-
-                    layout_total_spaces.startAnimation(enterFromTop);
-                    txtParkingNameCaption.startAnimation(enterLeft);
-                    txtLandmarks.startAnimation(enterRight);
-                    txtSmartParkingArea.startAnimation(enterLeft);
-                    btnNavigate.startAnimation(fadeIn);
-
-                    txtParkingName.startAnimation(enterFromTop);
 
                     if (publicParkingLot.is_temporary)
                         txtParkingCategory.setTextColor(Color.RED);
@@ -292,10 +276,6 @@ public class FirebaseES {
         final LinearLayout layout_total_spaces = activity.findViewById(R.id.layout_total_spaces);
         final LinearLayout layout_available_spaces = activity.findViewById(R.id.layout_available_spaces);
 
-        fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_enter);
-        enterLeft = AnimationUtils.loadAnimation(context, R.anim.slide_left_enter);
-        enterRight = AnimationUtils.loadAnimation(context, R.anim.swipe_right_enter);
-
         databaseReference = firebaseDatabase.getReference();
 
         databaseReference.child("parking_lot").child("private_parking").child(dbReferenace).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -312,11 +292,6 @@ public class FirebaseES {
                     txtSpecialInfo.setText(privateParkingLot.info);
                     txtAvailableSpaces.setText((String.valueOf(privateParkingLot.available_slots)));
                     Glide.with(activity).load(privateParkingLot.image_url).into(imgParkingLot);
-
-                    layout_available_spaces.startAnimation(enterLeft);
-                    layout_total_spaces.startAnimation(enterRight);
-                    btnNavigate.startAnimation(fadeIn);
-                    btnBookNow.startAnimation(fadeIn);
 
                     ArrayList<Facility> facilityArrayList;
                     ParkingFacilityAdapter parkingFacilityAdapter;
@@ -400,6 +375,12 @@ public class FirebaseES {
 
                     for (Map.Entry<String, ParkingNode> node : privateParkingLot.parking_slots.entrySet())
                         if (!node.getValue().status) hw_slots++;
+
+                    if (privateParkingLot.bookings == null) {
+                        txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots)));
+                        return;
+                    }
+
                     txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots - privateParkingLot.bookings.size())));
                 }
             }

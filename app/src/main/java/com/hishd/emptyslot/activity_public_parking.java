@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +22,32 @@ public class activity_public_parking extends AppCompatActivity {
     FirebaseES firebaseES;
     TextView view_what_is_temp_parking;
     CFAlertDialog.Builder popUpDialog;
+    Animation fadeIn, enterLeft, enterRight, enterFromTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public_parking);
+
+        fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_enter);
+        enterLeft = AnimationUtils.loadAnimation(this, R.anim.slide_left_enter);
+        enterRight = AnimationUtils.loadAnimation(this, R.anim.swipe_right_enter);
+        enterFromTop = AnimationUtils.loadAnimation(this, R.anim.slide_down_enter);
+
+        final TextView txtParkingName = findViewById(R.id.txtParkingName);
+        final TextView txtParkingNameCaption = findViewById(R.id.txtParkingNameCaption);
+        final TextView txtLandmarks = findViewById(R.id.txtLandmarks);
+        final TextView txtSmartParkingArea = findViewById(R.id.txtSmartParkingArea);
+        final Button btnNavigate = findViewById(R.id.btnNavigate);
+        final LinearLayout layout_total_spaces = findViewById(R.id.layout_total_spaces);
+
+        layout_total_spaces.startAnimation(enterFromTop);
+        txtParkingNameCaption.startAnimation(enterLeft);
+        txtLandmarks.startAnimation(enterRight);
+        txtSmartParkingArea.startAnimation(enterLeft);
+        btnNavigate.startAnimation(fadeIn);
+
+        txtParkingName.startAnimation(enterFromTop);
 
         popUpDialog = new CFAlertDialog.Builder(this)
                 .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)

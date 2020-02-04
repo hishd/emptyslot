@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,20 +23,46 @@ import com.hishd.emptyslot.R;
 import com.hishd.emptyslot.Util.AppConfig;
 import com.hishd.emptyslot.Util.Booking;
 
+import net.glxn.qrgen.android.QRCode;
+
+
 public class ActiveBookingFragment extends Fragment {
 
     RecyclerView rclr_active_Bookings;
     FirebaseRecyclerAdapter<Booking, ViewHolder> adapter;
     AppConfig appConfig;
+    ImageView imgQR;
+
+    AlertDialog.Builder alertDialog;
+    AlertDialog dialog;
+    View mView;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_active_bookings, container, false);
+        final View root = inflater.inflate(R.layout.fragment_active_bookings, container, false);
         rclr_active_Bookings = root.findViewById(R.id.rclr_active_Bookings);
+        imgQR = root.findViewById(R.id.imgQR);
         rclr_active_Bookings.setLayoutManager(new LinearLayoutManager(root.getContext()));
         appConfig = new AppConfig(root.getContext());
         fetch();
+
+        imgQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog = new AlertDialog.Builder(root.getContext());
+                mView = getLayoutInflater().inflate(R.layout.custom_qr_dialog, null);
+                imgQR = mView.findViewById(R.id.imgQR);
+
+
+                imgQR.setImageBitmap(QRCode.from(appConfig.getLogedUserID()).bitmap());
+
+                alertDialog.setView(mView);
+                dialog = alertDialog.create();
+                dialog.show();
+            }
+        });
+
         return root;
     }
 
