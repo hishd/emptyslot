@@ -88,7 +88,7 @@ public class FirebaseES {
     }
 
     private void showProgressDialog() {
-        dialog = new Dialog(context);
+        dialog = new Dialog(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         dialog.setContentView(R.layout.loading_view);
         dialog.show();
         dialog.setCancelable(false);

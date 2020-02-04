@@ -19,7 +19,7 @@
     <color name="errorMessageBackgroundColor">#222121</color>
 
 
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#50FFFFFF</color>
 
     <color name="parking_slot">#4F3F91</color>
     <color name="public_parking_slot">#0266B0</color>
