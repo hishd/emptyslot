@@ -52,7 +52,6 @@ import com.hishd.emptyslot.activity_view_private_parking;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -337,14 +336,41 @@ public class FirebaseES {
                     btnNavigate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", privateParkingLot.loc_lat, privateParkingLot.loc_lng);
-                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+
+                            new SweetAlertDialog(activity
+                                    , SweetAlertDialog.WARNING_TYPE).setTitleText("Are you Sure?")
+                                    .setContentText("The Selected parking is currently closed. Are you sure you want to start the navigation to the selected parking lot?")
+                                    .setConfirmText("Yes")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                            sweetAlertDialog.dismissWithAnimation();
+                                            String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", privateParkingLot.loc_lat, privateParkingLot.loc_lng);
+                                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+                                        }
+                                    }).setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                }
+                            }).show();
                         }
                     });
 
                     btnBookNow.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+                            if (!txtAvailability.getText().toString().equals("OPEN")) {
+                                new SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE).setTitleText("Parking Closed").setContentText("Parking is currently Closed. Sorry for the inconvenience caused. ").setConfirmText("Ok").show();
+                                return;
+                            }
+
+                            if (Integer.parseInt(txtAvailableSpaces.getText().toString()) < 1) {
+                                new SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE).setTitleText("Parking Full").setContentText("Parking is full, please wait for a moment and recheck the availability. Sorry for the inconvenience caused. ").setConfirmText("Ok").show();
+                                return;
+                            }
+
                             activity.startActivity(new Intent(context, activity_booking_private_parking.class)
                                     .putExtra("PARKING_ID", dbReferenace)
                                     .putExtra("PARKING_NAME", privateParkingLot.lot_name)
@@ -369,19 +395,25 @@ public class FirebaseES {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    hw_slots = 0;
+//                    hw_slots = 0;
                     privateParkingLot = dataSnapshot.getValue(PrivateParkingLot.class);
-                    txtAvailability.setText(privateParkingLot.availability);
+                    txtAvailability.setText(privateParkingLot.availability.toUpperCase());
 
-                    for (Map.Entry<String, ParkingNode> node : privateParkingLot.parking_slots.entrySet())
-                        if (!node.getValue().status) hw_slots++;
-
-                    if (privateParkingLot.bookings == null) {
-                        txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots)));
-                        return;
-                    }
-
-                    txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots - privateParkingLot.bookings.size())));
+                    if (privateParkingLot.availability.equals("open"))
+                        txtAvailability.setTextColor(Color.parseColor("#01D538"));
+                    else
+                        txtAvailability.setTextColor(Color.parseColor("#FC2A2A"));
+//
+//                    for (Map.Entry<String, ParkingNode> node : privateParkingLot.parking_slots.entrySet())
+//                        if (!node.getValue().status) hw_slots++;
+//
+//                    if (privateParkingLot.bookings == null) {
+//                        txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots)));
+//                        return;
+//                    }
+//
+//                    txtAvailableSpaces.setText((String.valueOf(privateParkingLot.total_slots - privateParkingLot.accomodated_slots - hw_slots - privateParkingLot.bookings.size())));
+                    txtAvailableSpaces.setText(String.valueOf(privateParkingLot.available_slots));
                 }
             }
 
