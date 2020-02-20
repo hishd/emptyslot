@@ -337,23 +337,29 @@ public class FirebaseES {
                         @Override
                         public void onClick(View v) {
 
-                            new SweetAlertDialog(activity
-                                    , SweetAlertDialog.WARNING_TYPE).setTitleText("Are you Sure?")
-                                    .setContentText("The Selected parking is currently closed. Are you sure you want to start the navigation to the selected parking lot?")
-                                    .setConfirmText("Yes")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            sweetAlertDialog.dismissWithAnimation();
-                                            String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", privateParkingLot.loc_lat, privateParkingLot.loc_lng);
-                                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
-                                        }
-                                    }).setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    sweetAlertDialog.dismissWithAnimation();
-                                }
-                            }).show();
+                            if (!txtAvailability.getText().toString().equals("OPEN")) {
+                                new SweetAlertDialog(activity
+                                        , SweetAlertDialog.WARNING_TYPE).setTitleText("Are you Sure?")
+                                        .setContentText("The Selected parking is currently closed. Are you sure you want to start the navigation to the selected parking lot?")
+                                        .setConfirmText("Yes")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                sweetAlertDialog.dismissWithAnimation();
+                                                String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", privateParkingLot.loc_lat, privateParkingLot.loc_lng);
+                                                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+                                            }
+                                        }).setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismissWithAnimation();
+                                    }
+                                }).show();
+                                return;
+                            }
+
+                            String uri = String.format(Locale.ENGLISH, "google.navigation:q=%f,%f", privateParkingLot.loc_lat, privateParkingLot.loc_lng);
+                            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
                         }
                     });
 
